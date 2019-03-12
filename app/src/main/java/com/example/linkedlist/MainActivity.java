@@ -16,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
         myLinks.AddEnd(4);
         myLinks.Display();
 
+        System.out.println("***Removing At Index 1***");
+        myLinks.RemoveAtIndex(1);
+        myLinks.Display();
+
+        System.out.println("***Removing End***");
+        myLinks.RemoveEnd();
+        myLinks.Display();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

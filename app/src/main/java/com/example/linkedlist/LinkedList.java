@@ -30,37 +30,24 @@ public class LinkedList
 
     public void AddEnd(int payload)
     {
-        Node n = new Node(payload);
 
         if(this.head == null)
         {
-            this.AddFront(n);
-            //this.head = n;
+            this.AddFront(payload);
         }
         else
         {
             Node currNode = this.head;
 
-            while (curNode.GetNextNode() != null)
+            while (currNode.GetNextNode() != null)
             {
-                currNode = curNode.GetNextNode();
+                currNode = currNode.GetNextNode();
             }
 
+            Node n = new Node(payload);
             currNode.SetNextNode(n);
-
-            //for (int i = 0; i < this.nodeCount; i++)
-            //{
-            //    if(currNode.GetNextNode() == null)
-            //    {
-            //        currNode.SetNextNode(n);
-            //    }
-
-            //    currNode = currNode.GetNextNode();
             this.nodeCount++;
-            }
         }
-
-        //this.nodeCount++;
     }
 
     public void AddAtIndex(int payload, int index)
@@ -92,7 +79,13 @@ public class LinkedList
     //removes the front node and returns the payload 
     public int RemoveFront()
     {
-        if(this.head != null)
+        int payload = -1;
+        if(this.head.GetNextNode() == null)
+        {
+            this.head = null;
+            System.out.println("You just removed head. Your linked list is broken");
+        }
+        else
         {
             Node currNode;
             currNode = this.head;
@@ -101,13 +94,72 @@ public class LinkedList
             currNode.SetNextNode(null);
             this.nodeCount--;
 
-            return currNode.GetPayload();
+            payload = currNode.GetPayload();
         }
+        return payload;
     }
 
-    public void RemoveEnd()
+    //rem
+    public int RemoveAtIndex(int index)
     {
+        int payload = -1;
+        if(index == 0)
+        {
+            payload = RemoveFront();
+        }
+        else
+        {
+            Node removedNode;
+            Node currNode;
+            currNode = this.head;
 
+            for(int i = 0; i < index - 1; i++)
+            {
+                currNode = currNode.GetNextNode();
+            }
+
+            removedNode = currNode.GetNextNode();
+
+            currNode.SetNextNode(removedNode.GetNextNode());
+
+            this.nodeCount--;
+            removedNode.SetNextNode(null);
+
+            removedNode.GetPayload();
+        }
+        return payload;
+    }
+
+
+    public int RemoveEnd()
+    {
+        int payload = -1;
+        if(this.head.GetNextNode() == null)
+        {
+            payload = RemoveFront();
+        }
+        else
+        {
+            Node currNode;
+            currNode = this.head;
+
+            Node lastNode;
+
+            //sets currNode to the second last node in the list
+            while(currNode.GetNextNode().GetNextNode() != null)
+            {
+                currNode = currNode.GetNextNode();
+            }
+
+            lastNode = currNode.GetNextNode();
+
+            //severs connection
+            currNode.SetNextNode(null);
+            this.nodeCount--;
+            payload = lastNode.GetPayload();
+        }
+
+        return payload;
     }
 
     //gets the payload at a certain node index
