@@ -76,10 +76,11 @@ public class LinkedList
         }
     }
 
-    //removes the front node and returns the payload 
+    //removes the front node and returns the payload
     public int RemoveFront()
     {
         int payload = -1;
+        //for a single node linked list
         if(this.head.GetNextNode() == null)
         {
             this.head = null;
@@ -94,18 +95,23 @@ public class LinkedList
             currNode.SetNextNode(null);
             this.nodeCount--;
 
-            payload = currNode.GetPayload();
+            return currNode.GetPayload();
         }
         return payload;
     }
 
-    //rem
+    //removes a node at a specific index
     public int RemoveAtIndex(int index)
     {
         int payload = -1;
+        //for a single node linked list
         if(index == 0)
         {
-            payload = RemoveFront();
+            return RemoveFront();
+        }
+        else if (index == this.nodeCount - 1)
+        {
+            return RemoveEnd();
         }
         else
         {
@@ -125,16 +131,17 @@ public class LinkedList
             this.nodeCount--;
             removedNode.SetNextNode(null);
 
-            removedNode.GetPayload();
+            return removedNode.GetPayload();
         }
-        return payload;
+        //return payload;
     }
 
-
+    //removes the last loaded node in a linked list
     public int RemoveEnd()
     {
         int payload = -1;
-        if(this.head.GetNextNode() == null)
+        //for a single or double node linked list
+        if(this.nodeCount <= 2)
         {
             payload = RemoveFront();
         }
@@ -146,10 +153,15 @@ public class LinkedList
             Node lastNode;
 
             //sets currNode to the second last node in the list
-            while(currNode.GetNextNode().GetNextNode() != null)
+            for(int i = 0; i < this.count -2; i++)
             {
                 currNode = currNode.GetNextNode();
             }
+
+            //while(currNode.GetNextNode().GetNextNode() != null)
+            //{
+            //    currNode = currNode.GetNextNode();
+            //}
 
             lastNode = currNode.GetNextNode();
 
@@ -158,7 +170,6 @@ public class LinkedList
             this.nodeCount--;
             payload = lastNode.GetPayload();
         }
-
         return payload;
     }
 
